@@ -2,10 +2,10 @@
 import shipdtls from "../info/ship-info";
 
 export default function Ship(shipType, position) {
-	const ship = shipdtls();
+	const shipDetails = shipdtls();
 
 	// Imports ship details
-	const { name, length } = ship[shipType];
+	const { name, length } = shipDetails[shipType];
 	let axis = "x";
 	const hitArr = Array(length).fill(false);
 

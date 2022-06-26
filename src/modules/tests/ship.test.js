@@ -1,5 +1,4 @@
 import Ship from "../factories/ship";
-import shipdtls from "../info/ship-info";
 
 describe("__Ship Factory__", () => {
 	describe("_Fetch Properties_", () => {
