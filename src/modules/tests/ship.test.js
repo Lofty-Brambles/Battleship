@@ -2,7 +2,7 @@ import Ship from "../factories/ship";
 
 describe("__Ship Factory__", () => {
 	describe("_Fetch Properties_", () => {
-		const ship = Ship("Battleship", [0, 1]);
+		const ship = new Ship("Battleship", [0, 1]);
 
 		test("Checks Name", () => {
 			expect(ship.name).toBe("Battleship");
@@ -19,7 +19,7 @@ describe("__Ship Factory__", () => {
 	});
 
 	describe("_Change axis f(x)_", () => {
-		const ship = Ship("Carrier", [0, 1]);
+		const ship = new Ship("Carrier", [0, 1]);
 
 		test("Checks axis alignment - y", () => {
 			ship.changeAxis("y");
@@ -36,7 +36,7 @@ describe("__Ship Factory__", () => {
 	});
 
 	describe("_Add hit effects_", () => {
-		const ship = Ship("Destroyer", [0, 1]);
+		const ship = new Ship("Destroyer", [0, 1]);
 
 		test("Checks hit array", () => {
 			expect(ship.hitArr).toEqual([false, false, false]);
@@ -52,7 +52,7 @@ describe("__Ship Factory__", () => {
 	});
 
 	describe("_Checks sink functionality_", () => {
-		const ship = Ship("Frigate", [0, 1]);
+		const ship = new Ship("Frigate", [0, 1]);
 
 		test("Checks isSunk f(x) for an unsunk ship", () => {
 			ship.hits(1);

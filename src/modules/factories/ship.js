@@ -1,31 +1,28 @@
-/* eslint-disable no-param-reassign */
 import shipdtls from "../info/ship-info";
 
-export default function Ship(shipType, position) {
-	const shipDetails = shipdtls();
+export default class Ship{
+	constructor(shipType, position) {
+		const { name, length, icon } = shipdtls()[shipType];
+		this.name = name;
+		this.length = length;
+		this.icon = icon;
 
-	// Imports ship details
-	const { name, length } = shipDetails[shipType];
-	let axis = "x";
-	const hitArr = Array(length).fill(false);
+		this.position = position;
+		this.axis = "x";
+		this.hitArr = Array(length).fill(false);
+	}
 
-	// Setter/Toggler for axis
-	const changeAxis = axe => {
-		if (axe) {
-			axis = axe;
+	changeAxis = axisArg => {
+		if (axisArg) {
+			this.axis = axisArg;
 		} else {
-			axis = axis === "x" ? "y" : "x";
+			this.axis = this.axis === "x" ? "y" : "x";
 		}
 	};
 
-	// hit( index ) -> Marks index as hit
-	const hits = i => {
-		if (i >= 0 && i < length) hitArr[i] = true;
+	hits = index => {
+		if (index >= 0 && index < this.length) this.hitArr[index] = true;
 	};
 
-	// isSunk() -> Check sink
-	const isSunk = () => hitArr.reduce(prev => prev === true);
-
-	return { name, position, axis, length, hitArr, changeAxis, hits, isSunk };
+	isSunk = () => this.hitArr.reduce(val => val === true);
 }
-
