@@ -28,3 +28,4 @@ export default function Ship(shipType, position) {
 
 	return { name, position, axis, length, hitArr, changeAxis, hits, isSunk };
 }
+
