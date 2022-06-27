@@ -1,6 +1,6 @@
 import shipdtls from "../util/ship-info";
 
-export default class Ship{
+export default class Ship {
 	constructor(shipType, position) {
 		const { name, length, icon } = shipdtls()[shipType];
 		this.name = name;
@@ -22,6 +22,19 @@ export default class Ship{
 
 	hits = index => {
 		if (index >= 0 && index < this.length) this.hitArr[index] = true;
+	};
+
+	coordSet = () => {
+		const array = [];
+		const { axis, position, length } = this;
+		for (let i = 0; i < length; i++) {
+			array.push((
+				axis === "x"
+					? [position[0] + i, position[1]]
+					: [position[0], position[1] + i]
+			));
+		}
+		return array;
 	};
 
 	isSunk = () => this.hitArr.reduce(val => val === true);

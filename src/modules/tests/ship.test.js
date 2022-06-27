@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import Ship from "../factories/ship";
 
 describe("__Ship Factory__", () => {
@@ -61,6 +62,18 @@ describe("__Ship Factory__", () => {
 		test("Checks isSunk f(x) for an sunken ship", () => {
 			ship.hits(0);
 			expect(ship.isSunk()).toBe(true);
+		});
+	});
+
+	describe("_Generates body Array_", () => {
+		const ship = new Ship("Submarine", [0, 1]);
+
+		test("Check if proper body positions are generated in x-axis", () => {
+			expect(ship.coordSet()).toEqual([[0, 1], [1, 1], [2, 1], [3, 1]]);
+		});
+		test("Check if proper body positions are generated in y-axis", () => {
+			ship.changeAxis();
+			expect(ship.coordSet()).toEqual([[0, 1], [0, 2], [0, 3], [0, 4]]);
 		});
 	});
 });
