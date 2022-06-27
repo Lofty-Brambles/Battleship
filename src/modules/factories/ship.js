@@ -1,4 +1,4 @@
-import shipdtls from "../info/ship-info";
+import shipdtls from "../util/ship-info";
 
 export default class Ship{
 	constructor(shipType, position) {

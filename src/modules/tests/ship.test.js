@@ -2,13 +2,13 @@ import Ship from "../factories/ship";
 
 describe("__Ship Factory__", () => {
 	describe("_Fetch Properties_", () => {
-		const ship = new Ship("Battleship", [0, 1]);
+		const ship = new Ship("Carrier", [0, 1]);
 
 		test("Checks Name", () => {
-			expect(ship.name).toBe("Battleship");
+			expect(ship.name).toBe("Carrier");
 		});
 		test("Checks Length", () => {
-			expect(ship.length).toBe(4);
+			expect(ship.length).toBe(5);
 		});
 		test("Checks Direction", () => {
 			expect(ship.axis).toBe("x");
@@ -19,7 +19,7 @@ describe("__Ship Factory__", () => {
 	});
 
 	describe("_Change axis f(x)_", () => {
-		const ship = new Ship("Carrier", [0, 1]);
+		const ship = new Ship("Submarine", [0, 1]);
 
 		test("Checks axis alignment - y", () => {
 			ship.changeAxis("y");

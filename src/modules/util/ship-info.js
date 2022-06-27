@@ -5,14 +5,9 @@ export default function shipdtls() {
 			length: 5,
 			icon: ""
 		},
-		Battleship: {
-			name: "Battleship",
+		Submarine: {
+			name: "Submarine",
 			length: 4,
-			icon: ""
-		},
-		Cruiser: {
-			name: "Cruiser",
-			length: 3,
 			icon: ""
 		},
 		Destroyer: {
