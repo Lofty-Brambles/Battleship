@@ -53,11 +53,11 @@ class Board {
 	receiveAttack(a, b) {
 		if (!Number.isInteger(a) || a >= 7 || a < 0)
 			throw new Error(
-				"The first argument is not a proper position coordinate."
+				"The argument is not a proper position coordinate."
 			);
 		if (!Number.isInteger(b) || b >= 7 || b < 0)
 			throw new Error(
-				"The second argument is not a proper position coordinate."
+				"The argument is not a proper position coordinate."
 			);
 
 		if (
@@ -69,7 +69,7 @@ class Board {
 			);
 		}
 
-		if (this.board[a][b] === "hidden-ship") {
+		if (this.board[a][b] === "hiddepn-ship") {
 			this.board[a][b] = "found-ship";
 			this.ships.forEach(shipPresent => {
 				const array = shipPresent.coordSet();
@@ -90,6 +90,18 @@ class Board {
 			sunkArr.push(ship.isSunk());
 		});
 		return sunkArr.indexOf(false) === -1;
+	}
+
+	findTakenMoves() {
+		const positions = [];
+		for( let i = 0; i < 7; i++ ) {
+			for( let j = 0; j < 7; j++ ) {
+				if (this.board[i][j] === "found-ship" || this.board[i][j] === "missed") {
+					positions.push([i, j]);
+				}
+			}
+		}
+		return positions;
 	}
 }
 

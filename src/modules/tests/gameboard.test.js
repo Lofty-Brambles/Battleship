@@ -15,6 +15,9 @@ describe("__Gameboard factory__", () => {
 		test("Checks empty ship array", () => {
 			expect(board1.ships).toEqual([]);
 		});
+		test("Checks empty fired locations", () => {
+			expect(board1.ships).toEqual([]);
+		});
 	});
 
 	describe("_Checks the placeShip() function_", () => {
@@ -123,6 +126,18 @@ describe("__Gameboard factory__", () => {
 		test("Checks if all ships sink when they have", () => {
 			board4.receiveAttack(1, 3);
 			expect(board4.allSunk()).toBe(true);
+		});
+
+		test("Checks the findTakenMoves() function", () => {
+			const posArr = [];
+			for( let i = 0; i < 7; i++ ) {
+				for( let j = 0; j < 7; j++ ) {
+					if (board4.board[i][j] === "found-ship" || board4.board[i][j] === "missed") {
+						posArr.push([i, j]);
+					}
+				}
+			}
+			expect(board4.findTakenMoves()).toEqual(posArr);
 		});
 	});
 });
