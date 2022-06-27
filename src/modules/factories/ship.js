@@ -28,14 +28,14 @@ export default class Ship {
 		const array = [];
 		const { axis, position, length } = this;
 		for (let i = 0; i < length; i++) {
-			array.push((
+			array.push(
 				axis === "x"
 					? [position[0], position[1] + i]
 					: [position[0] + i, position[1]]
-			));
+			);
 		}
 		return array;
 	};
 
-	isSunk = () => this.hitArr.reduce(val => val === true);
+	isSunk = () => this.hitArr.indexOf(false) === -1;
 }

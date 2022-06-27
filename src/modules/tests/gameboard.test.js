@@ -108,4 +108,21 @@ describe("__Gameboard factory__", () => {
 			expect(board3.ships[0].hitArr).toEqual([false, true, false]);
 		});
 	});
+
+	describe("_Checks the All ships sunk function_", () => {
+		const board4 = new Board();
+		const starShip = new Ship("Destroyer", [1, 1]);
+		board4.placeShip(starShip);
+		board4.receiveAttack(1, 1);
+		board4.receiveAttack(1, 2);
+		
+		test("Checks if all ships sink when they haven't", () => {
+			expect(board4.allSunk()).toBe(false);
+		});
+
+		test("Checks if all ships sink when they have", () => {
+			board4.receiveAttack(1, 3);
+			expect(board4.allSunk()).toBe(true);
+		});
+	});
 });

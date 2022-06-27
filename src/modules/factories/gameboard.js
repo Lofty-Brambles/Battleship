@@ -83,6 +83,14 @@ class Board {
 		}
 		return false;
 	}
+
+	allSunk() {
+		const sunkArr = [];
+		this.ships.forEach(ship => {
+			sunkArr.push(ship.isSunk());
+		});
+		return sunkArr.indexOf(false) === -1;
+	}
 }
 
 export { Board, testInitBoard };

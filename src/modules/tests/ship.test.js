@@ -69,11 +69,11 @@ describe("__Ship Factory__", () => {
 		const ship = new Ship("Submarine", [0, 1]);
 
 		test("Check if proper body positions are generated in x-axis", () => {
-			expect(ship.coordSet()).toEqual([[0, 1], [1, 1], [2, 1], [3, 1]]);
+			expect(ship.coordSet()).toEqual([[0, 1], [0, 2], [0, 3], [0, 4]]);
 		});
 		test("Check if proper body positions are generated in y-axis", () => {
 			ship.changeAxis();
-			expect(ship.coordSet()).toEqual([[0, 1], [0, 2], [0, 3], [0, 4]]);
+			expect(ship.coordSet()).toEqual([[0, 1], [1, 1], [2, 1], [3, 1]]);
 		});
 	});
 });
