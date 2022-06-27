@@ -30,8 +30,8 @@ export default class Ship {
 		for (let i = 0; i < length; i++) {
 			array.push((
 				axis === "x"
-					? [position[0] + i, position[1]]
-					: [position[0], position[1] + i]
+					? [position[0], position[1] + i]
+					: [position[0] + i, position[1]]
 			));
 		}
 		return array;

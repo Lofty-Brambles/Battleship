@@ -1,5 +1,6 @@
+import generateBoard from "../util/boardgen";
+
 const testInitBoard = () => {};
-const resetBoard = () => Array(7).fill(Array(7).fill("empty"));
 const spaceCheck = (board, length, position, direction) => {
 	if (direction === "x") {
 		for (let i = position[1]; i < position[1] + length; i++) {
@@ -20,7 +21,7 @@ const parseArray = (array, target) =>
 
 class Board {
 	constructor() {
-		this.board = resetBoard();
+		this.board = generateBoard();
 		this.ships = [];
 	}
 
@@ -73,7 +74,7 @@ class Board {
 			this.ships.forEach(shipPresent => {
 				const array = shipPresent.coordSet();
 				const index = parseArray(array, [a, b]);
-				if (index !== -1) shipPresent.hit(index);
+				if (index !== -1) shipPresent.hits(index);
 			});
 			return true;
 		}

@@ -2,100 +2,110 @@
 
 import { Board } from "../factories/gameboard";
 import Ship from "../factories/ship";
+import generateBoard from "../util/boardgen";
 
-const returnMorningStar = () => {
-	const withMorningStar = Array(7).fill(Array(7).fill("empty"));
-	for (let i = 0; i < 4; i++) {
-		withMorningStar[1][i] = "hidden-ship";
-	}
-	return withMorningStar;
-};
-const returnNightStar = () => {
-	const withMorningStar = returnMorningStar();
-	const withNightStar = JSON.parse(JSON.stringify(withMorningStar));
-	for (let i = 1; i < 3; i++) {
-		withNightStar[i][3] = "hidden-ship";
-	}
-	return withNightStar;
-};
+describe("__Gameboard factory__", () => {
+	describe("_Newly initialized board_", () => {
+		const board1 = new Board();
 
-describe("___Gameboard Factory___", () => {
-	const newBoard = new Board();
-
-	describe("_Check properties_", () => {
-		test("Checks for board", () => {
+		test("Checks empty board", () => {
 			const boardTest = Array(7).fill(Array(7).fill("empty"));
-			expect(newBoard.board).toEqual(boardTest);
+			expect(board1.board).toEqual(boardTest);
 		});
-		test("Checks for ships", () => {
-			expect(newBoard.ships).toEqual([]);
+		test("Checks empty ship array", () => {
+			expect(board1.ships).toEqual([]);
 		});
 	});
 
-	describe("__Tries the placeShip() function__", () => {
-		beforeEach(() => {
-			const withMorningStar = returnMorningStar();
-			const withNightStar = returnNightStar();
-		});
-		const MorningStar = new Ship("Carrier", [0, 0]);
-		const NightStar = new Ship("Frigate", [3, 1]);
+	describe("_Checks the placeShip() function_", () => {
+		const board2 = new Board();
+		const starShip = new Ship("Carrier", [0, 0]);
+		const earthShip = new Ship("Frigate", [1, 3]);
+		earthShip.changeAxis("y");
 
-		const fakeStar = new Ship("Carrier", [0, 5]);
-		NightStar.changeAxis("y");
-
+		const fakeShip = new Ship("Carrier", [0, 5]);
 		test("Checks for errors on placing ships at wrong coords", () => {
-			expect(newBoard.placeShip(fakeStar)).toThrow(
-				"Ship doesn't fit in board."
-			);
+			expect(() => {
+				board2.placeShip(fakeShip);
+			}).toThrow();
 		});
 
-		newBoard.placeShip(MorningStar);
 		test("Checks for ships in board", () => {
-			expect(newBoard.board).toEqual(withMorningStar);
-		});
-		test("Checks for ship in ship list", () => {
-			expect(newBoard.ships).toEqual([MorningStar]);
-		});
+			const withStarShip = generateBoard();
+			for (let i = 0; i < 5; i++) {
+				withStarShip[0][i] = "hidden-ship";
+			}
 
-		newBoard.placeShip(NightStar);
-		test("Checks for ships in board", () => {
-			expect(newBoard.board).toEqual(withNightStar);
+			board2.placeShip(starShip);
+			expect(board2.board).toEqual(withStarShip);
 		});
 		test("Checks for ship in ship list", () => {
-			expect(newBoard.ships).toEqual([MorningStar, NightStar]);
+			expect(board2.ships).toEqual([starShip]);
+		});
+		test("Checks for ships in board", () => {
+			const withAllShips = generateBoard();
+			for (let i = 0; i < 5; i++) {
+				withAllShips[0][i] = "hidden-ship";
+			}
+			for (let i = 1; i < 3; i++) {
+				withAllShips[i][3] = "hidden-ship";
+			}
+
+			board2.placeShip(earthShip);
+			expect(board2.board).toEqual(withAllShips);
+		});
+		test("Checks for ship in ship list", () => {
+			expect(board2.ships).toEqual([starShip, earthShip]);
 		});
 	});
 
-	describe("__Tries the receiveAttack() function__", () => {
-		beforeEach(() => {
-			const withNightStar = returnNightStar();
-		});
+	describe("_Checks the receiveAttack() function_", () => {
+		const board3 = new Board();
+		const starShip = new Ship("Destroyer", [1, 1]);
+		board3.placeShip(starShip);
 
 		test("Checks board after wrong attack x-coords", () => {
-			expect(newBoard.receiveAttack(8, 1)).toThrow(
-				"The first argument is not a proper position coordinate."
-			);
+			expect(() => {
+				board3.receiveAttack(8, 1);
+			}).toThrow();
 		});
 		test("Checks board after wrong attack y-coords", () => {
-			expect(newBoard.receiveAttack(1, -2)).toThrow(
-				"The second argument is not a proper position coordinate."
-			);
+			expect(() => {
+				board3.receiveAttack(1, -2);
+			}).toThrow();
 		});
 
 		test("Checks board after attack on a missed square", () => {
-			newBoard.receiveAttack(5, 5);
-			withNightStar[5][5] = "missed";
-			expect(newBoard.board).toEqual(withNightStar);
+			const withAllShips = generateBoard();
+			for (let i = 1; i < 4; i++) {
+				withAllShips[1][i] = "hidden-ship";
+			}
+			withAllShips[5][5] = "missed";
+
+			board3.receiveAttack(5, 5);
+			expect(board3.board).toEqual(withAllShips);
+		});
+
+		test("Checks for wrong moves in a discovered square", () => {
+			expect(() => {
+				board3.receiveAttack(5, 5);
+			}).toThrow();
 		});
 
 		test("Checks board after attack on a found square", () => {
-			newBoard.receiveAttack(2, 3);
-			withNightStar[2][3] = "found-ship";
-			expect(newBoard.board).toEqual(withNightStar);
+			const withAllShips = generateBoard();
+			for (let i = 1; i < 4; i++) {
+				withAllShips[1][i] = "hidden-ship";
+			}
+			withAllShips[5][5] = "missed";
+			withAllShips[1][2] = "found-ship";
+
+			board3.receiveAttack(1, 2);
+			expect(board3.board).toEqual(withAllShips);
 		});
-		
-		test("Checks for wrong moves in a discovered square", () => {
-			expect(newBoard.receiveAttack(5, 5)).toThrow("You cannot hit a spot that you had already hit before.");
+
+		test("Checks ship after hit", () => {
+			expect(board3.ships[0].hitArr).toEqual([false, true, false]);
 		});
 	});
 });
