@@ -1,4 +1,4 @@
-import initBoardSetup from "../util/init-board";
+import initBoardSetup from "./init-board";
 import loadStartModal from "./load-start";
 
 export default function onePlay() {
