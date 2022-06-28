@@ -1,0 +1,229 @@
+@use "mix";
+@use "normalize";
+
+body {
+	@include mix.flex(column, space-between);
+	min-height: 100vh;
+}
+
+header {
+	@include mix.box(100%, 10vh);
+	@include mix.flex();
+	gap: 1rem;
+	@include mix.gradient(mix.$light, mix.$dark, horizontal);
+
+	font-family: mix.$titan;
+	font-weight: 500;
+	font-size: 2rem;
+
+	& img {
+		@include mix.box(4rem);
+	}
+}
+
+nav {
+	@include mix.box(100%, 8vh);
+	@include mix.flex(row, center, flex-end);
+	@include mix.gradient(mix.$light, mix.$dark, horizontal);
+	border-bottom: 0.3rem double mix.$light;
+
+	& button {
+		@include mix.flex();
+		gap: 0.5rem;
+		height: 100%;
+		width: 12rem;
+		font-family: mix.$fedora;
+		font-size: 0.8rem;
+
+		position: relative;
+		transition: all 0.3s ease;
+		color: mix.$light;
+		background-color: transparent;
+		border: none;
+
+		&::after, &::before {
+			content: "";
+			@include mix.box(0.75rem);
+			position: absolute;
+			transition: all 0.4s ease-in-out;
+			opacity: 0;
+		}
+
+		&::before {
+			content: "";
+			transform: translate(-100%, 50%);
+
+			border-top: 3px solid mix.$cyan;
+			border-right: 3px solid mix.$cyan;
+			right: 0;
+			top: 0;
+		}
+
+		&::after {
+			content: "";
+			transform: translate(-100%, 50%);
+
+			border-bottom: 3px solid mix.$cyan;
+			border-left: 3px solid mix.$cyan;
+			left: 0;
+			bottom: 0;
+		}
+
+		&:hover {
+			color: mix.$cyan;
+		}
+
+		&.active {
+			background-color: mix.$l-dark;
+		}
+
+		&:hover::after, &:hover::before,
+		&.active::after, &.active::before {
+			transform: translate(0, 0);
+			opacity: 1;
+		}
+	}
+}
+
+main {
+	box-sizing: content-box;
+	width: calc(100% - 4rem);
+	padding: 2rem;
+
+	@include mix.flex(column);
+	gap: 2rem;
+	
+	background-image: url(../../assets/background.webp);
+	background-color: linear-gradient(to bottom,
+			rgba(mix.$light, 0.6),
+			rgba(mix.$dark, 0.3));
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+footer {
+	@include mix.box(100%, 10vh);
+	@include mix.flex();
+	gap: 0.5rem;
+	@include mix.gradient(mix.$light, mix.$dark, horizontal);
+	border-top: 0.3rem double mix.$light;
+
+	& div {
+		font-family: mix.$fedora;
+		font-size: 1rem;
+	}
+
+	& a {
+		display: block;
+		border-radius: 100%;
+
+		& img {
+			@include mix.box(2rem);
+			transition: transform 0.5s ease-in-out;
+
+			&:hover {
+				transform: rotate(360deg) scale(1.2);
+			}
+		}
+	}
+}
+
+.wrapper {
+	@include mix.flex(column);
+	gap: 1.3rem;
+	padding: 2rem;
+
+	color: mix.$light;
+	background-color: rgba(mix.$dark, 0.7);
+	border: 0.3rem solid mix.$dark;
+	border-radius: 3rem;
+
+	& .form-group {
+		position: relative;
+		width: 80%;
+
+		@include mix.flex( column, flex-start );
+		padding: 10px;
+		font-family: mix.$titan;
+
+		& input {
+			display: block;
+			@include mix.box(100%, 20px);
+
+			font-family: mix.$flower;
+			font-weight: 800;
+			letter-spacing: 1px;
+			color: mix.$l-bloo;
+
+			background-color: transparent;
+			border: none;
+			border-bottom:1px solid mix.$light;
+
+			&:focus {
+				outline: 0;
+				border-bottom: 2px solid mix.$l-bloo; 
+
+				& ~ .bar::before, & ~ .bar::before {
+					width: 50%;
+				}
+			}
+
+			&:focus ~ label, &:not(:placeholder-shown) ~ label {
+				top: -10px;
+				color: mix.$l-bloo;
+			}
+		}
+
+		& label {
+			position: absolute;
+			top: 3px;
+
+			color: mix.$light;
+			pointer-events: none;
+			transition: 0.2s ease all;
+		}
+	}
+}
+
+
+
+.button {
+	@include mix.flex();
+	box-sizing: border-box;
+	position: relative;
+	text-align: center;
+
+	padding: .5rem 0rem;
+	border: 0 solid mix.$light;
+	width: 10rem;
+	line-height: 1rem;
+
+	background-color: mix.$cyan;
+	color: mix.$dark;
+	text-decoration: none;
+	font-family: mix.$fedora;
+	cursor: pointer;
+
+	transform: rotate(-2deg);
+	user-select: none;
+
+	&:focus {
+		outline: 0;
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		border: 1px solid mix.$dark;
+		bottom: 0.25rem;
+		left: 0.25rem;
+		width: calc(100% - 1px);
+		height: calc(100% - 1px);
+	}
+
+	&:hover::after {
+		bottom: 0.125rem;
+		left: 0.125rem;
+	}
+}

@@ -69,7 +69,7 @@ class Board {
 			);
 		}
 
-		if (this.board[a][b] === "hiddepn-ship") {
+		if (this.board[a][b] === "hidden-ship") {
 			this.board[a][b] = "found-ship";
 			this.ships.forEach(shipPresent => {
 				const array = shipPresent.coordSet();
